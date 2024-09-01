@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            max-width: 1200px; /* Set a max-width for larger screens */
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 auto 20px; /* Center the table */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px; /* Increased padding for better readability */
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .button-link {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .button-link:hover {
+            background-color: #2980b9;
+        }
+        .home-button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .home-button {
+            display: block;
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 18px;
+            padding: 10px;
+            border: 2px solid #007BFF;
+            border-radius: 5px;
+            text-align: center;
+            width: 150px;
+            background-color: #f4f4f4;
+            transition: background-color 0.3s;
+        }
+        .home-button:hover {
+            background-color: #007BFF;
+            color: #fff;
+        }
+        img{
+        height: 100px;
+        width: 100px;
+        border-radius: 70px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Product List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Price ($)</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in productdetails %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{% if product.picture %}
+                        <img src="{{ product.picture.url }}" alt="{{ product.name }}'s picture">
+                    {% else %}
+                        No Image found
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'editproduct' product.id %}" class="button-link" style="background-color: #3498db;">Edit</a>
+                    <a href="{% url 'deleteproduct' product.id %}" class="button-link" style="background-color: #e74c3c;">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No products found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="home-button-container">
+        <a href="{% url 'home' %}" class="home-button">Home</a>
+    </div>
+</body>
+</html>
